@@ -48,11 +48,16 @@ ul {
 }
 
 .rajasthan {
+    background-color: #fff0e5;
     border-left: 8px solid #c94f4f;
 }
+
 .kerala {
+    background-color: #e5f7f0;
     border-left: 8px solid #2e8b57;
 }
+
 .punjab {
+    background-color: #fff8cc;
     border-left: 8px solid #d4aa00;
 }
