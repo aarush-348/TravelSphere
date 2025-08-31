@@ -20,6 +20,10 @@ a {
   z-index: 10;
 }
 
+.nav-logo {
+    display: flex;
+}
+
 .nav-container {
   max-width: 1200px;
   margin: auto;
@@ -27,6 +31,14 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.nav-container img {
+  display: flex;
+  height: 40px;         
+  width: auto;
+  align-self: center;
+  padding-right: 5px;
 }
 
 .logo {
