@@ -1,85 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing Page</title>
-    <link rel="stylesheet" href="style.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TravelSphere</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="first">
-        <div class="header">
-            <div class="left"> <b> <h1>ADS Enterprises </b></h1></div>
-            <div class="right">
-                <div> <a href="https://www.yatra.com/india-tour-packages/holidays-in-manali"><br> Manali</a></div>
-                <div> <a href="https://www.yatra.com/india-tour-packages/holidays-in-shimla"><br> Shimla </a></div>
-                <div> <a href="https://www.yatra.com/india-tour-packages/holidays-in-andaman"><br> Andaman and Nicobar </a></div>
-                <div> <a href="gallery/gallery.html"><br>Gallery</a></div>
-                <div> <a href="culture/culture.html"><br>Culture</a></div>
-                <div> <a href="contact.html"><br>Contact</a></div>
-            </div>
-        </div>
-        
-        <div class="main">
-            <div class="des">
-                <div> <br>This website is awesome</div>
-                <div class="sub"> <br>Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
-                <br><button> Sign up</button>
-            </div>
-            <div  class="dent">
-                <div> <br> This is a placeholder for an image</div>
-                <img src="img/AbuDhabhi.jpg" width="300px" height="200px">
-            </div> 
-        </div>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <h1 class="logo">TravelSphere</h1>
+      <nav class="nav-links">
+        <a href="#">Home</a>
+        <a href="culture/culture.html">Destinations</a>
+        <a href="gallery/gallery.html">Tours</a>
+        <a href="contact.html">Contact</a>
+      </nav>
     </div>
-    <div class="second">
-        <div class="smr">
-            <div> <br>Read more about our packages: </div>
-        </div>
-        
-        <div class="lorem">
-            <ul>
-                <div class="cul">
-                    <div class="card"><li> Best budget packages </li>  </div>
-                    <div class="card"><li> Top rated packages  </li>  </div>
-                    <div class="card"><li> HOT places to visit! </li>  </div>
+  </header>
 
-                    <div class="card"><li> Critic's vote for best places to visit </li>  </div>
-                </div>
-            </ul>   
-        </div>
-
-    </div> 
-    <div class="third">
-        <div>  This is a tourism website. Here you will find various places you may want to go to. Enjoy your holiday with the help of our company ADS."</div>
-        <div class="author">
-        <div> -Superman </div>
-        </div>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-overlay">
+      <div class="hero-content">
+        <h2>Discover Your Next Adventure</h2>
+        <p>Explore breathtaking destinations and unique experiences.</p>
+        <a href="#destinations" class="btn">Start Exploring</a>
+      </div>
     </div>
-    <div class="fourth">
-        <div class="sign">
-            <div class="boxy">
-                <div class="call">
-                    <div> <br>Call to action! It is time </div>
-                    
-                    <div class="subby">
-                    
-                    <div> <br>Sign up for our product by clicking that button right over there! </div>
+  </section>
 
-                    </div>
-                </div>
-                <div class="bb">
-                    <button class="up" href=""> Sign up </button>
-                </div>
-            </div>          
+  <!-- Links to Pages -->
+  <section class="cards">
+    <a href="#destinations" class="card">
+      <img src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=800&q=80" alt="Destinations">
+      <div class="card-content">
+        <h3>Destinations</h3>
+        <p>Find the most beautiful places around the globe to visit.</p>
+      </div>
+    </a>
 
-            
-        </div>
+    <a href="#tours" class="card">
+      <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80" alt="Tours">
+      <div class="card-content">
+        <h3>Tours</h3>
+        <p>Join guided tours and immerse yourself in local culture.</p>
+      </div>
+    </a>
 
-    </div>
-    <div class="footer">
-        <div> Copyright ©,ADS Enterprises 2024</div>
-    </div>
+    <a href="contact.html" class="card">
+      <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=800&q=80" alt="Contact">
+      <div class="card-content">
+        <h3>Contact Us</h3>
+        <p>Get in touch for bookings, queries, or travel guidance.</p>
+      </div>
+    </a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 TravelSphere. All rights reserved.</p>
+  </footer>
 </body>
 </html>
