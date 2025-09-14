@@ -5,8 +5,8 @@ window.addEventListener("DOMContentLoaded", function () {
   const navbar = document.querySelector(".navbar");
 
   window.addEventListener("scroll", function () {
-    if (window.scrollY > 50) {
-      navbar.style.boxShadow = "0 2px 8px rgba(0,0,0,0.2)";
+    if (window.scrollY > 5) {
+      navbar.style.boxShadow = "0 2px 8px rgb(0,0,255)";
     } else {
       navbar.style.boxShadow = "";
     }
