@@ -37,6 +37,7 @@ window.addEventListener("DOMContentLoaded", function() {
     requiredFields.forEach(function(id) {
       const field = document.getElementById(id);
       if (!field.value.trim()) {
+        field.style.border = "1px";
         field.style.borderColor = "red";
         valid = false;
       } else {
