@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gallery</title>
+    <title>Tours | TravelSphere</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="gallery.css">
+    <link rel="stylesheet" href="../css/auth.css">
+    <link rel="stylesheet" href="../css/tours-extra.css">
 </head>
 <body>
 
@@ -30,44 +32,31 @@
 
   <!-- page header -->
   <div class = "header">
-      <h1>Our Past Trips</h1>
+      <h1>Our Tours</h1>
+  </div>
+
+  <!-- Search & Filter Bar -->
+  <div class="search-bar">
+    <input type="text" id="tour-search" placeholder="🔍 Search tours by name or location...">
+    <select id="tour-sort">
+      <option value="">Sort By</option>
+      <option value="price_asc">Price: Low to High</option>
+      <option value="price_desc">Price: High to Low</option>
+      <option value="rating">Top Rated</option>
+      <option value="duration">Shortest Duration</option>
+    </select>
   </div>
   
-  <div class="container">
-      <div class="card">
-          <img src="img/Andaman.jpg" alt="Andaman and Nicobar Islands">
-          <p>Andaman and Nicobar</p>
-      </div>
-
-      <div class="card">
-          <img src="img/Goa.jpg" alt="Goa">
-          <p>Goa</p>
-      </div>
-
-      <div class="card">
-          <img src="img/Manali.jpg" alt="Manali">
-          <p>Manali</p>
-      </div>
-
-      <div class="card">
-          <img src="img/Shimla.jpg" alt="Shimla">
-          <p>Shimla</p>
-      </div>
-
-      <div class="card">
-        <img src="img/Agra.jpg" alt="Agra">
-        <p>Agra</p>
-    </div>
-
-    <div class="card">
-        <img src="img/Kerela.jpg" alt="Kerala">
-        <p>Kerala</p>
-    </div>
+  <!-- Tours loaded dynamically from API -->
+  <div class="container" id="tours-container">
+    <p style="text-align:center; padding:2rem; color:#94a3b8; grid-column:1/-1;">Loading tours...</p>
   </div>
   
   <footer class="footer">
     <p>&copy; 2025 TravelSphere. All rights reserved.</p>
   </footer>
 
+  <script src="../js/navbar.js"></script>
+  <script src="../js/tours.js"></script>
 </body>
 </html>

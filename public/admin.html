@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | TravelSphere</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="TravelSphereSmallLogo.png" alt="TravelSphere Logo">
+        <h1 class="logo">TravelSphere</h1>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="AboutUs.html">About Us</a>
+          <a href="culture/culture.html">Destinations</a>
+          <a href="gallery/gallery.html">Tours</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="admin-header">
+    <h1>🛠️ Admin Dashboard</h1>
+    <p>Manage your TravelSphere content</p>
+  </div>
+
+  <div class="admin-container">
+    <!-- Stats Row -->
+    <div class="stats-row" id="stats-row"></div>
+
+    <!-- Tabs -->
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="contacts">📧 Contact Messages</button>
+      <button class="admin-tab" data-tab="destinations">🗺️ Destinations</button>
+      <button class="admin-tab" data-tab="tours">🏔️ Tours</button>
+      <button class="admin-tab" data-tab="bookings">📋 Bookings</button>
+    </div>
+
+    <!-- Contact Messages Panel -->
+    <div class="admin-panel active" id="panel-contacts">
+      <table class="admin-table" id="contacts-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Message</th>
+            <th>Subscribed</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Destinations Panel -->
+    <div class="admin-panel" id="panel-destinations">
+      <div class="admin-form">
+        <h3 id="dest-form-title">Add New Destination</h3>
+        <form id="destination-form">
+          <input type="hidden" id="dest-edit-id">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="dest-name">Name</label>
+              <input type="text" id="dest-name" required>
+            </div>
+            <div class="form-group">
+              <label for="dest-image">Image URL</label>
+              <input type="text" id="dest-image" required placeholder="/culture/img/photo.jpg">
+            </div>
+            <div class="form-group">
+              <label for="dest-theme">Color Theme</label>
+              <select id="dest-theme">
+                <option value="default">Default (Blue)</option>
+                <option value="rajasthan">Rajasthan (Red)</option>
+                <option value="kerala">Kerala (Green)</option>
+                <option value="punjab">Punjab (Gold)</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label for="dest-desc">Description</label>
+              <textarea id="dest-desc" rows="2" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="dest-festivals">Festivals (comma separated)</label>
+              <input type="text" id="dest-festivals" placeholder="Festival 1, Festival 2">
+            </div>
+            <div class="form-group">
+              <label for="dest-foods">Traditional Foods (comma separated)</label>
+              <input type="text" id="dest-foods" placeholder="Food 1, Food 2">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn">Save Destination</button>
+            <button type="button" class="btn" style="background:#e5e7eb;color:#333;" id="dest-cancel-edit" hidden>Cancel Edit</button>
+          </div>
+        </form>
+      </div>
+      <table class="admin-table" id="destinations-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Theme</th>
+            <th>Festivals</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Tours Panel -->
+    <div class="admin-panel" id="panel-tours">
+      <div class="admin-form">
+        <h3 id="tour-form-title">Add New Tour</h3>
+        <form id="tour-form">
+          <input type="hidden" id="tour-edit-id">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="tour-name">Name</label>
+              <input type="text" id="tour-name" required>
+            </div>
+            <div class="form-group">
+              <label for="tour-location">Location</label>
+              <input type="text" id="tour-location" required>
+            </div>
+            <div class="form-group">
+              <label for="tour-image">Image URL</label>
+              <input type="text" id="tour-image" required placeholder="/gallery/img/photo.jpg">
+            </div>
+            <div class="form-group">
+              <label for="tour-price">Price (₹ per person)</label>
+              <input type="number" id="tour-price" required min="0">
+            </div>
+            <div class="form-group">
+              <label for="tour-duration">Duration (days)</label>
+              <input type="number" id="tour-duration" required min="1">
+            </div>
+            <div class="form-group">
+              <label for="tour-group">Max Group Size</label>
+              <input type="number" id="tour-group" value="20" min="1">
+            </div>
+            <div class="form-group full-width">
+              <label for="tour-desc">Description</label>
+              <textarea id="tour-desc" rows="2" required></textarea>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn">Save Tour</button>
+            <button type="button" class="btn" style="background:#e5e7eb;color:#333;" id="tour-cancel-edit" hidden>Cancel Edit</button>
+          </div>
+        </form>
+      </div>
+      <table class="admin-table" id="tours-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Price</th>
+            <th>Duration</th>
+            <th>Rating</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Bookings Panel -->
+    <div class="admin-panel" id="panel-bookings">
+      <table class="admin-table" id="bookings-table">
+        <thead>
+          <tr>
+            <th>Booking ID</th>
+            <th>User</th>
+            <th>Tour</th>
+            <th>Date</th>
+            <th>People</th>
+            <th>Total</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2025 TravelSphere. All rights reserved.</p>
+  </footer>
+
+  <script src="js/navbar.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('token');
+      const userRole = localStorage.getItem('userRole');
+
+      if (!token || userRole !== 'admin') {
+        document.querySelector('.admin-container').innerHTML =
+          '<p style="text-align:center;padding:3rem;color:#dc2626;font-size:1.2rem;">⛔ Access Denied. Admin login required.</p>';
+        return;
+      }
+
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      };
+
+      // ===== TAB SWITCHING =====
+      document.querySelectorAll('.admin-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+          document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+          tab.classList.add('active');
+          document.getElementById(`panel-${tab.dataset.tab}`).classList.add('active');
+        });
+      });
+
+      // ===== LOAD CONTACTS =====
+      async function loadContacts() {
+        const res = await fetch('/api/contact', { headers });
+        const data = await res.json();
+        const tbody = document.querySelector('#contacts-table tbody');
+        tbody.innerHTML = data.data.map(c => `
+          <tr>
+            <td>${new Date(c.createdAt).toLocaleDateString()}</td>
+            <td>${c.name}</td>
+            <td>${c.email}</td>
+            <td>${c.phone}</td>
+            <td>${c.message.substring(0, 80)}${c.message.length > 80 ? '...' : ''}</td>
+            <td>${c.subscribe ? '✅' : '—'}</td>
+          </tr>
+        `).join('');
+        return data.data.length;
+      }
+
+      // ===== LOAD DESTINATIONS =====
+      async function loadDestinations() {
+        const res = await fetch('/api/destinations');
+        const data = await res.json();
+        const tbody = document.querySelector('#destinations-table tbody');
+        tbody.innerHTML = data.data.map(d => `
+          <tr>
+            <td>${d.name}</td>
+            <td>${d.colorTheme}</td>
+            <td>${d.festivals.join(', ')}</td>
+            <td>
+              <button class="btn-sm btn-edit" onclick="editDestination('${d._id}')">Edit</button>
+              <button class="btn-sm btn-danger" onclick="deleteDestination('${d._id}')">Delete</button>
+            </td>
+          </tr>
+        `).join('');
+        return data.data.length;
+      }
+
+      // ===== LOAD TOURS =====
+      async function loadTours() {
+        const res = await fetch('/api/tours');
+        const data = await res.json();
+        const tbody = document.querySelector('#tours-table tbody');
+        tbody.innerHTML = data.data.map(t => `
+          <tr>
+            <td>${t.name}</td>
+            <td>${t.location}</td>
+            <td>₹${t.price.toLocaleString('en-IN')}</td>
+            <td>${t.duration} days</td>
+            <td>${t.averageRating.toFixed(1)} ⭐ (${t.totalReviews})</td>
+            <td>
+              <button class="btn-sm btn-edit" onclick="editTour('${t._id}')">Edit</button>
+              <button class="btn-sm btn-danger" onclick="deleteTour('${t._id}')">Delete</button>
+            </td>
+          </tr>
+        `).join('');
+        return data.data.length;
+      }
+
+      // ===== LOAD BOOKINGS =====
+      async function loadBookings() {
+        const res = await fetch('/api/bookings', { headers });
+        const data = await res.json();
+        const tbody = document.querySelector('#bookings-table tbody');
+        tbody.innerHTML = data.data.map(b => `
+          <tr>
+            <td><code>${b.bookingId}</code></td>
+            <td>${b.user?.name || 'N/A'}</td>
+            <td>${b.tour?.name || 'N/A'}</td>
+            <td>${new Date(b.date).toLocaleDateString()}</td>
+            <td>${b.numberOfPeople}</td>
+            <td>₹${b.totalPrice.toLocaleString('en-IN')}</td>
+            <td><span class="badge badge-${b.status}">${b.status}</span></td>
+          </tr>
+        `).join('');
+        return data.data.length;
+      }
+
+      // ===== STATS =====
+      async function loadStats() {
+        const [contacts, destinations, tours, bookings] = await Promise.all([
+          loadContacts(), loadDestinations(), loadTours(), loadBookings()
+        ]);
+        document.getElementById('stats-row').innerHTML = `
+          <div class="stat-card"><div class="stat-number">${contacts}</div><div class="stat-label">Contact Messages</div></div>
+          <div class="stat-card"><div class="stat-number">${destinations}</div><div class="stat-label">Destinations</div></div>
+          <div class="stat-card"><div class="stat-number">${tours}</div><div class="stat-label">Tours</div></div>
+          <div class="stat-card"><div class="stat-number">${bookings}</div><div class="stat-label">Bookings</div></div>
+        `;
+      }
+
+      loadStats();
+
+      // ===== DESTINATION FORM =====
+      const destForm = document.getElementById('destination-form');
+      destForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const editId = document.getElementById('dest-edit-id').value;
+        const body = {
+          name: document.getElementById('dest-name').value,
+          description: document.getElementById('dest-desc').value,
+          imageUrl: document.getElementById('dest-image').value,
+          colorTheme: document.getElementById('dest-theme').value,
+          festivals: document.getElementById('dest-festivals').value.split(',').map(s => s.trim()).filter(Boolean),
+          foods: document.getElementById('dest-foods').value.split(',').map(s => s.trim()).filter(Boolean)
+        };
+
+        const url = editId ? `/api/destinations/${editId}` : '/api/destinations';
+        const method = editId ? 'PUT' : 'POST';
+
+        const res = await fetch(url, { method, headers, body: JSON.stringify(body) });
+        const data = await res.json();
+        if (data.success) {
+          destForm.reset();
+          document.getElementById('dest-edit-id').value = '';
+          document.getElementById('dest-form-title').textContent = 'Add New Destination';
+          document.getElementById('dest-cancel-edit').hidden = true;
+          loadDestinations();
+        } else {
+          alert(data.message);
+        }
+      });
+
+      document.getElementById('dest-cancel-edit').addEventListener('click', () => {
+        destForm.reset();
+        document.getElementById('dest-edit-id').value = '';
+        document.getElementById('dest-form-title').textContent = 'Add New Destination';
+        document.getElementById('dest-cancel-edit').hidden = true;
+      });
+
+      // Edit destination
+      window.editDestination = async (id) => {
+        const res = await fetch(`/api/destinations/${id}`);
+        const data = await res.json();
+        if (data.success) {
+          const d = data.data;
+          document.getElementById('dest-edit-id').value = d._id;
+          document.getElementById('dest-name').value = d.name;
+          document.getElementById('dest-desc').value = d.description;
+          document.getElementById('dest-image').value = d.imageUrl;
+          document.getElementById('dest-theme').value = d.colorTheme;
+          document.getElementById('dest-festivals').value = d.festivals.join(', ');
+          document.getElementById('dest-foods').value = d.foods.join(', ');
+          document.getElementById('dest-form-title').textContent = 'Edit Destination';
+          document.getElementById('dest-cancel-edit').hidden = false;
+          // Switch to destinations tab
+          document.querySelector('[data-tab="destinations"]').click();
+        }
+      };
+
+      // Delete destination
+      window.deleteDestination = async (id) => {
+        if (!confirm('Delete this destination? This cannot be undone.')) return;
+        const res = await fetch(`/api/destinations/${id}`, { method: 'DELETE', headers });
+        const data = await res.json();
+        if (data.success) loadDestinations();
+        else alert(data.message);
+      };
+
+      // ===== TOUR FORM =====
+      const tourForm = document.getElementById('tour-form');
+      tourForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const editId = document.getElementById('tour-edit-id').value;
+        const body = {
+          name: document.getElementById('tour-name').value,
+          location: document.getElementById('tour-location').value,
+          description: document.getElementById('tour-desc').value,
+          imageUrl: document.getElementById('tour-image').value,
+          price: Number(document.getElementById('tour-price').value),
+          duration: Number(document.getElementById('tour-duration').value),
+          maxGroupSize: Number(document.getElementById('tour-group').value)
+        };
+
+        const url = editId ? `/api/tours/${editId}` : '/api/tours';
+        const method = editId ? 'PUT' : 'POST';
+
+        const res = await fetch(url, { method, headers, body: JSON.stringify(body) });
+        const data = await res.json();
+        if (data.success) {
+          tourForm.reset();
+          document.getElementById('tour-edit-id').value = '';
+          document.getElementById('tour-form-title').textContent = 'Add New Tour';
+          document.getElementById('tour-cancel-edit').hidden = true;
+          loadTours();
+        } else {
+          alert(data.message);
+        }
+      });
+
+      document.getElementById('tour-cancel-edit').addEventListener('click', () => {
+        tourForm.reset();
+        document.getElementById('tour-edit-id').value = '';
+        document.getElementById('tour-form-title').textContent = 'Add New Tour';
+        document.getElementById('tour-cancel-edit').hidden = true;
+      });
+
+      // Edit tour
+      window.editTour = async (id) => {
+        const res = await fetch(`/api/tours/${id}`);
+        const data = await res.json();
+        if (data.success) {
+          const t = data.data;
+          document.getElementById('tour-edit-id').value = t._id;
+          document.getElementById('tour-name').value = t.name;
+          document.getElementById('tour-location').value = t.location;
+          document.getElementById('tour-desc').value = t.description;
+          document.getElementById('tour-image').value = t.imageUrl;
+          document.getElementById('tour-price').value = t.price;
+          document.getElementById('tour-duration').value = t.duration;
+          document.getElementById('tour-group').value = t.maxGroupSize;
+          document.getElementById('tour-form-title').textContent = 'Edit Tour';
+          document.getElementById('tour-cancel-edit').hidden = false;
+          document.querySelector('[data-tab="tours"]').click();
+        }
+      };
+
+      // Delete tour
+      window.deleteTour = async (id) => {
+        if (!confirm('Delete this tour? This cannot be undone.')) return;
+        const res = await fetch(`/api/tours/${id}`, { method: 'DELETE', headers });
+        const data = await res.json();
+        if (data.success) loadTours();
+        else alert(data.message);
+      };
+    });
+  </script>
+</body>
+</html>

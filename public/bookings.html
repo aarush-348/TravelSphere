@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Bookings | TravelSphere</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/tours-extra.css">
+  <style>
+    .bookings-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .bookings-container h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #1e293b;
+    }
+    .booking-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .booking-card img {
+      width: 150px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .booking-info { flex: 1; }
+    .booking-info h3 { margin: 0 0 0.5rem; color: #1e293b; }
+    .booking-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 0.9rem; color: #64748b; }
+    .booking-id { font-family: monospace; color: #2563eb; font-weight: 600; }
+    .cancel-btn {
+      background: #fee2e2; color: #991b1b; border: none; padding: 0.5rem 1rem;
+      border-radius: 8px; cursor: pointer; font-weight: 600; transition: background 0.3s;
+    }
+    .cancel-btn:hover { background: #fecaca; }
+    .no-bookings { text-align: center; padding: 3rem; color: #94a3b8; }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="TravelSphereSmallLogo.png" alt="TravelSphere Logo">
+        <h1 class="logo">TravelSphere</h1>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="AboutUs.html">About Us</a>
+          <a href="culture/culture.html">Destinations</a>
+          <a href="gallery/gallery.html">Tours</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="header" style="background:#111827;padding:2rem;text-align:center;color:white;">
+    <h1>My Bookings</h1>
+  </div>
+
+  <div class="bookings-container">
+    <div id="bookings-list">
+      <p style="text-align:center; padding:2rem; color:#94a3b8;">Loading your bookings...</p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2025 TravelSphere. All rights reserved.</p>
+  </footer>
+
+  <script src="js/navbar.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const token = localStorage.getItem('token');
+      const list = document.getElementById('bookings-list');
+
+      if (!token) {
+        list.innerHTML = '<p class="no-bookings">Please <a href="/login.html">login</a> to see your bookings.</p>';
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/bookings/my', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+
+        if (data.success && data.data.length > 0) {
+          list.innerHTML = data.data.map(b => `
+            <div class="booking-card">
+              <img src="${b.tour?.imageUrl || ''}" alt="${b.tour?.name || 'Tour'}">
+              <div class="booking-info">
+                <h3>${b.tour?.name || 'Tour'}</h3>
+                <div class="booking-meta">
+                  <span class="booking-id">${b.bookingId}</span>
+                  <span>📍 ${b.tour?.location || ''}</span>
+                  <span>📅 ${new Date(b.date).toLocaleDateString()}</span>
+                  <span>👥 ${b.numberOfPeople} people</span>
+                  <span>💰 ₹${b.totalPrice.toLocaleString('en-IN')}</span>
+                  <span class="badge badge-${b.status}">${b.status.toUpperCase()}</span>
+                </div>
+              </div>
+              ${b.status !== 'cancelled' ? `<button class="cancel-btn" data-id="${b._id}">Cancel</button>` : ''}
+            </div>
+          `).join('');
+
+          // Cancel handlers
+          document.querySelectorAll('.cancel-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+              if (!confirm('Are you sure you want to cancel this booking?')) return;
+              try {
+                const res = await fetch(`/api/bookings/${btn.dataset.id}/cancel`, {
+                  method: 'PATCH',
+                  headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+                if (data.success) {
+                  location.reload();
+                } else {
+                  alert(data.message);
+                }
+              } catch (err) {
+                alert('Error cancelling booking.');
+              }
+            });
+          });
+        } else {
+          list.innerHTML = '<p class="no-bookings">You have no bookings yet. <a href="/gallery/gallery.html">Browse tours</a> to get started!</p>';
+        }
+      } catch (err) {
+        list.innerHTML = '<p class="no-bookings">Error loading bookings. Please try again.</p>';
+      }
+    });
+  </script>
+</body>
+</html>
