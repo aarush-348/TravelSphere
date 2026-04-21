@@ -26,7 +26,17 @@ router.post('/', protect, async (req, res) => {
     }
 
     // Calculate total price
-    const totalPrice = tour.price * numberOfPeople;
+    let totalPrice = tour.price * numberOfPeople;
+
+    // Apply group discount if valid
+    const { groupDiscount, discountToken } = req.body;
+    let discountApplied = false;
+    if (groupDiscount && discountToken) {
+      if (global._groupDiscountTokens && global._groupDiscountTokens.has(discountToken)) {
+        totalPrice = Math.round(totalPrice * 0.9); // 10% discount
+        discountApplied = true;
+      }
+    }
 
     // Create booking (mock payment — automatically confirmed)
     const booking = await Booking.create({
@@ -43,8 +53,9 @@ router.post('/', protect, async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: `Booking confirmed! Your booking ID is ${booking.bookingId}`,
-      data: booking
+      message: `Booking confirmed! Your booking ID is ${booking.bookingId}${discountApplied ? ' (10% group discount applied!)' : ''}`,
+      data: booking,
+      discountApplied
     });
   } catch (error) {
     if (error.name === 'ValidationError') {

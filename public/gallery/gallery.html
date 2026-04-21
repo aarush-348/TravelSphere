@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tours | TravelSphere</title>
+    <meta name="description" content="Browse and book curated tours across India. Find your perfect adventure with TravelSphere.">
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="gallery.css">
     <link rel="stylesheet" href="../css/auth.css">
     <link rel="stylesheet" href="../css/tours-extra.css">
+    <link rel="stylesheet" href="../css/buddy.css">
     <script src="../js/script-gallery.js"></script>
 </head>
 <body>
@@ -49,7 +51,13 @@
   </div>
   
   <!-- Tours loaded dynamically from API -->
-  <div class="container" id="tours-container">
+  <h2 style="text-align:center; padding-top:2rem; padding-bottom:1rem; color:#0f172a; font-size:2rem;">National Tours</h2>
+  <div class="container" id="national-tours-container">
+    <p style="text-align:center; padding:2rem; color:#94a3b8; grid-column:1/-1;">Loading tours...</p>
+  </div>
+
+  <h2 style="text-align:center; padding-top:2rem; padding-bottom:1rem; color:#0f172a; font-size:2rem;">International Escapes</h2>
+  <div class="container" id="international-tours-container">
     <p style="text-align:center; padding:2rem; color:#94a3b8; grid-column:1/-1;">Loading tours...</p>
   </div>
   
@@ -57,6 +65,8 @@
     <p>&copy; 2025 TravelSphere. All rights reserved.</p>
   </footer>
 
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="../js/buddy.js"></script>
   <script src="../js/navbar.js"></script>
   <script src="../js/tours.js"></script>
 </body>

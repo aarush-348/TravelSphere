@@ -1,8 +1,7 @@
 // tours.js — Fetch tours from API, render cards, handle search/filter, and tour detail modal
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const container = document.getElementById('tours-container');
-  if (!container) return;
+  // We use national and international containers now
 
   let allTours = [];
 
@@ -16,14 +15,25 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Render tour cards
   function renderTours(tours) {
+    const nationalContainer = document.getElementById('national-tours-container');
+    const intlContainer = document.getElementById('international-tours-container');
+    if (!nationalContainer || !intlContainer) return;
+
     if (tours.length === 0) {
-      container.innerHTML = '<p style="text-align:center; padding:2rem; color:#666; grid-column: 1/-1;">No tours found matching your search.</p>';
+      nationalContainer.innerHTML = '<p style="text-align:center; padding:2rem; color:#666; grid-column: 1/-1;">No tours found matching your search.</p>';
+      intlContainer.innerHTML = '<p style="text-align:center; padding:2rem; color:#666; grid-column: 1/-1;">No tours found matching your search.</p>';
       return;
     }
 
     const token = localStorage.getItem('token');
+    
+    // Sort logic
+    const nationalList = tours.filter(t => ['Goa', 'Kerala', 'Manali', 'Shimla', 'Agra', 'Andaman'].some(x => t.location.includes(x)));
+    const intlList = tours.filter(t => !['Goa', 'Kerala', 'Manali', 'Shimla', 'Agra', 'Andaman'].some(x => t.location.includes(x)));
 
-    container.innerHTML = tours.map(tour => `
+    const createHTML = (tourList) => {
+      if (tourList.length === 0) return '<p style="text-align:center; padding:2rem; grid-column:1/-1;">No tours in this category.</p>';
+      return tourList.map(tour => `
       <div class="card tour-card" data-tour-id="${tour._id}">
         <img src="${tour.imageUrl}" alt="${tour.name}">
         <p class="tour-name">${tour.name}</p>
@@ -41,6 +51,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>
       </div>
     `).join('');
+    };
+
+    nationalContainer.innerHTML = createHTML(nationalList);
+    intlContainer.innerHTML = createHTML(intlList);
 
     // Attach click handlers for detail buttons
     document.querySelectorAll('.tour-details-btn').forEach(btn => {
@@ -66,7 +80,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderTours(allTours);
       }
     } catch (error) {
-      container.innerHTML = '<p style="text-align:center; padding:2rem; color:#c94f4f; grid-column:1/-1;">Failed to load tours. Please refresh.</p>';
+      const natContainer = document.getElementById('national-tours-container');
+      const intlContainer = document.getElementById('international-tours-container');
+      if (natContainer) natContainer.innerHTML = '<p style="text-align:center; padding:2rem; color:#c94f4f; grid-column:1/-1;">Failed to load tours. Please refresh.</p>';
+      if (intlContainer) intlContainer.innerHTML = '<p style="text-align:center; padding:2rem; color:#c94f4f; grid-column:1/-1;">Failed to load tours. Please refresh.</p>';
     }
   }
 
@@ -207,6 +224,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 `).join('') : '<p class="no-reviews">No reviews yet. Be the first to review!</p>'}
               </div>
             </div>
+
+            ${token && window.TravelBuddy ? window.TravelBuddy.createBuddyButton(tour._id) : ''}
           </div>
         </div>
       </div>
@@ -215,13 +234,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.body.appendChild(modal);
     document.body.style.overflow = 'hidden';
 
+    // Initialize Travel Buddy panel if available
+    if (token && window.TravelBuddy) {
+      window.TravelBuddy.initBuddyPanel(tour._id);
+    }
+
     // Close modal
     modal.querySelector('.modal-close').addEventListener('click', () => {
+      if (window.TravelBuddy) window.TravelBuddy.cleanup();
       modal.remove();
       document.body.style.overflow = '';
     });
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
+        if (window.TravelBuddy) window.TravelBuddy.cleanup();
         modal.remove();
         document.body.style.overflow = '';
       }
@@ -261,17 +287,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
           btn.disabled = true;
           btn.textContent = 'Processing...';
+          // Check for group discount
+          const groupDiscountToken = window.TravelBuddy ? window.TravelBuddy.getGroupDiscount(tour._id) : null;
+          const bookingPayload = {
+            tourId: tour._id,
+            date: modal.querySelector('#booking-date').value,
+            numberOfPeople: parseInt(modal.querySelector('#booking-people').value)
+          };
+          if (groupDiscountToken) {
+            bookingPayload.groupDiscount = true;
+            bookingPayload.discountToken = groupDiscountToken;
+          }
           const res = await fetch('/api/bookings', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({
-              tourId: tour._id,
-              date: modal.querySelector('#booking-date').value,
-              numberOfPeople: parseInt(modal.querySelector('#booking-people').value)
-            })
+            body: JSON.stringify(bookingPayload)
           });
           const data = await res.json();
           if (data.success) {

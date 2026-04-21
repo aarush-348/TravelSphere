@@ -1,0 +1,228 @@
+/* globe.css — Interactive 3D Globe styles */
+
+/* Globe Section */
+#globe-section {
+  position: relative;
+  background: linear-gradient(180deg, #020617 0%, #0f172a 50%, #020617 100%);
+  padding: 3rem 1rem;
+  overflow: hidden;
+}
+
+#globe-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.globe-header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.globe-header h2 {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #f1f5f9;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.globe-header p {
+  color: #64748b;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* Globe Container */
+#globe-container {
+  width: 100%;
+  max-width: 900px;
+  height: 700px;
+  margin: 0 auto;
+  position: relative;
+  cursor: grab;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+#globe-container:active {
+  cursor: grabbing;
+}
+
+#globe-container canvas {
+  display: block;
+  border-radius: 20px;
+}
+
+/* Info Panel */
+#globe-info-panel {
+  position: absolute;
+  right: -500px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 380px;
+  max-height: 80%;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 20;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+#globe-info-panel.active {
+  right: 1rem;
+}
+
+.globe-close-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  transition: background 0.3s;
+}
+
+.globe-close-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.panel-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.panel-body {
+  padding: 1.25rem;
+}
+
+.panel-body h3 {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0 0 0.5rem;
+}
+
+.panel-desc {
+  color: #94a3b8;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.panel-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.panel-meta span {
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  background: rgba(148, 163, 184, 0.1);
+  padding: 0.3rem 0.65rem;
+  border-radius: 8px;
+}
+
+.panel-rating {
+  color: #f59e0b !important;
+}
+
+.panel-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 1rem !important;
+  font-size: 1.05rem !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #0ea5e9, #6366f1) !important;
+  color: #fff !important;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.panel-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
+}
+
+/* Globe Wrapper for positioning the info panel */
+.globe-wrapper {
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hint text */
+.globe-hint {
+  text-align: center;
+  color: #475569;
+  font-size: 0.85rem;
+  margin-top: 1rem;
+  animation: fadeInUp 1s ease 1s forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  #globe-info-panel {
+    position: fixed;
+    right: -100%;
+    top: auto;
+    bottom: 0;
+    transform: none;
+    width: 100%;
+    max-height: 60vh;
+    border-radius: 20px 20px 0 0;
+  }
+
+  #globe-info-panel.active {
+    right: 0;
+  }
+
+  #globe-container {
+    height: 350px;
+  }
+
+  .globe-header h2 {
+    font-size: 1.6rem;
+  }
+}

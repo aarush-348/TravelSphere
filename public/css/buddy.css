@@ -1,0 +1,262 @@
+/* buddy.css — Travel Buddy Chat styles */
+
+/* Buddy Section */
+.buddy-section {
+  margin-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 1.5rem;
+}
+
+/* Toggle Button */
+.buddy-toggle-btn {
+  width: 100%;
+  padding: 0.85rem 1.2rem !important;
+  font-size: 1rem !important;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899) !important;
+  border: none;
+  border-radius: 12px !important;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.buddy-toggle-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.35);
+}
+
+/* Viewer Badge */
+.viewer-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  transition: all 0.3s;
+}
+
+.viewer-badge.multiple {
+  background: #10b981;
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+}
+
+/* Chat Panel */
+.buddy-chat-panel {
+  margin-top: 1rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); max-height: 0; }
+  to { opacity: 1; transform: translateY(0); max-height: 500px; }
+}
+
+/* Chat Header */
+.buddy-chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1rem;
+  background: linear-gradient(135deg, #1e293b, #334155);
+  color: #fff;
+}
+
+.buddy-chat-header strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.buddy-viewer-info {
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+.buddy-group-btn {
+  padding: 0.45rem 0.85rem !important;
+  font-size: 0.78rem !important;
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  border: none;
+  border-radius: 8px !important;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.buddy-group-btn:disabled {
+  background: #475569 !important;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.buddy-group-btn:not(:disabled):hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* Chat Feed */
+.buddy-chat-feed {
+  height: 220px;
+  overflow-y: auto;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.buddy-chat-feed::-webkit-scrollbar {
+  width: 4px;
+}
+
+.buddy-chat-feed::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+/* Chat Messages */
+.buddy-msg {
+  display: flex;
+  flex-direction: column;
+  max-width: 80%;
+  animation: msgFade 0.3s ease;
+}
+
+@keyframes msgFade {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.buddy-msg.own {
+  align-self: flex-end;
+}
+
+.buddy-msg.other {
+  align-self: flex-start;
+}
+
+.buddy-msg.system {
+  align-self: center;
+  max-width: 90%;
+}
+
+.buddy-msg-name {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 0.15rem;
+  padding: 0 0.5rem;
+}
+
+.buddy-msg.own .buddy-msg-name {
+  text-align: right;
+  color: #7c3aed;
+}
+
+.buddy-msg-text {
+  padding: 0.6rem 0.9rem;
+  border-radius: 14px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.buddy-msg.own .buddy-msg-text {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.buddy-msg.other .buddy-msg-text {
+  background: #fff;
+  color: #1e293b;
+  border: 1px solid #e2e8f0;
+  border-bottom-left-radius: 4px;
+}
+
+.buddy-msg.system .buddy-msg-text {
+  background: #eff6ff;
+  color: #1e40af;
+  font-size: 0.8rem;
+  text-align: center;
+  border-radius: 8px;
+  padding: 0.4rem 0.75rem;
+}
+
+.buddy-msg.group-notification .buddy-msg-text {
+  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+  color: #065f46;
+  font-size: 0.85rem;
+  text-align: center;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  border: 1px solid #a7f3d0;
+}
+
+.buddy-msg-time {
+  font-size: 0.68rem;
+  color: #94a3b8;
+  padding: 0.15rem 0.5rem;
+}
+
+.buddy-msg.own .buddy-msg-time {
+  text-align: right;
+}
+
+/* Chat Input */
+.buddy-chat-input {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-top: 1px solid #e2e8f0;
+  background: #fff;
+}
+
+.buddy-chat-input input {
+  flex: 1;
+  padding: 0.65rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border-color 0.3s;
+}
+
+.buddy-chat-input input:focus {
+  outline: none;
+  border-color: #8b5cf6;
+}
+
+.buddy-send-btn {
+  padding: 0.65rem 1.25rem !important;
+  font-size: 0.88rem !important;
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+  border: none;
+  border-radius: 12px !important;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.buddy-send-btn:hover {
+  transform: scale(1.05);
+}

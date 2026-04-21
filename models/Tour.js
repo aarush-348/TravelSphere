@@ -47,6 +47,10 @@ const tourSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  coordinates: {
+    lat: { type: Number },
+    lng: { type: Number }
+  },
   createdAt: {
     type: Date,
     default: Date.now

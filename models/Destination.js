@@ -26,7 +26,7 @@ const destinationSchema = new mongoose.Schema({
   }],
   colorTheme: {
     type: String,
-    enum: ['rajasthan', 'kerala', 'punjab', 'default'],
+    enum: ['rajasthan', 'kerala', 'punjab', 'japan', 'france', 'italy', 'usa', 'brazil', 'southafrica', 'australia', 'default'],
     default: 'default'
   },
   createdAt: {

@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TravelSphere</title>
+  <title>TravelSphere — Discover Your Next Adventure</title>
+  <meta name="description" content="TravelSphere — AI-powered trip planning, interactive globe exploration, and real-time travel buddy matching. Discover India like never before.">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/globe.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="js/script-index.js"></script>
 </head>
 <body>
@@ -40,6 +43,21 @@
     </div>
   </section>
 
+  <!-- 3D Globe Explorer Section -->
+  <section id="globe-section">
+    <div class="globe-header">
+      <h2>🌍 Explore the Globe</h2>
+      <p>Drag to rotate, click on glowing markers to discover our tours across India.</p>
+    </div>
+    <div class="globe-wrapper">
+      <div id="globe-container"></div>
+      <div id="globe-info-panel">
+        <button class="globe-close-btn" id="globe-close-panel">&times;</button>
+      </div>
+    </div>
+    <p class="globe-hint">🖱️ Drag to rotate • Click markers to explore</p>
+  </section>
+
   <!-- Links to Pages -->
   <section class="cards">
     <a href="culture/culture.html" class="card">
@@ -57,14 +75,6 @@
         <p>Join guided tours and immerse yourself in local culture.</p>
       </div>
     </a>
-
-    <a href="contact.html" class="card">
-      <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=800&q=80" alt="Contact">
-      <div class="card-content">
-        <h3>Contact Us</h3>
-        <p>Get in touch for bookings, queries, or travel guidance.</p>
-      </div>
-    </a>
   </section>
 
   <!-- Footer -->
@@ -72,6 +82,8 @@
     <p>&copy; 2025 TravelSphere. All rights reserved.</p>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/globe.js"></script>
   <script src="js/navbar.js"></script>
 </body>
 </html>
